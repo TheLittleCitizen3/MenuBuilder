@@ -16,7 +16,7 @@ namespace MenuBuilder.menu
             {
                 Menu.ReadUserSelection();
             }
-            Menu.Action();
+            Menu.Act();
         }
 
     }

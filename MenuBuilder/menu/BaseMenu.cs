@@ -1,4 +1,5 @@
 ﻿using MenuBuilder.menu;
+using MenuBuilder.menu.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,19 @@ namespace MenuBuilder
 {
     abstract class BaseMenu<T> : IMenu<T>
     {
-        public abstract Dictionary<string, ITakeAction<T>> ActionItems { get; set; }
-        public abstract string ActionName { get; set; }
-        public abstract List<IInputvalidation> Validations { get; set; }
+        public Dictionary<string, ITakeAction<T>> ActionItems { get; set; }
+        public string ActionName { get; set; }
+        public virtual List<IInputvalidation> Validations { get; set; }
 
-        public abstract void Action();
+        public virtual void Act()
+        {
+            ActionName = GetAction();
+            if (ActionName == null)
+            {
+                throw new InavlidActionInputException("The Option Input is Invalid");
+            }
+            ActionItems[ActionName].Act();
+        }
 
         public void PrintMenuOptions()
         {
@@ -40,7 +49,18 @@ namespace MenuBuilder
             return true;
         }
 
-
+        private string GetAction()
+        {
+            
+            foreach (var item in ActionItems.Keys)
+            {
+                if (ActionName == item)
+                {
+                    return ActionName;
+                }
+            }
+            return null;
+        }
 
     }
 }

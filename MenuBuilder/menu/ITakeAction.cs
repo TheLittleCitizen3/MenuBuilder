@@ -8,7 +8,7 @@ namespace MenuBuilder
     interface ITakeAction<T>
     {
         string ActionName { get; set; }
-        public void Action();
+        public void Act();
 
     }
 }
